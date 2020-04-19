@@ -75,6 +75,10 @@ while {!_isSorted} do {
 		systemChat format ["Iterations done: %1", _iterations];
 	};
 
+	if (_iterations % 10000 == 0) then {
+		systemChat "Still haven't found it...";
+	};
+
 };
 
 onEachFrame {};
