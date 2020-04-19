@@ -1,9 +1,28 @@
-arraySorted = [1,2,3,4,5,6,7,8,9,10];
+_input = _this select 0;
+
+// Select depending on the syntax of the input
+switch (typeName _this) do {
+	case "ARRAY": {_veh = _this select 0;};
+	default { if (true) exitWith {[-1, 20] diagMessage format ["Bogosort error: Parameter Type %1, expected Array", typeName _input]} };
+};
+
+{
+	if (typeName _x != "SCALAR") exitWith {[-1, 20] diagMessage format ["Bogosort error: Array must contain numbers only", typeName _input]};
+} forEach _input;
+
+arraySorted = _input sort true;
 
 protect "arraySorted";
 
-private ["_array"];
+//private ["_array"];
 
+
+bogo_swap = {
+	_swapFrom = _this select 0
+	_swapTo = _this select 0
+
+	if ()
+};
 
 bogo_randomise = {
 	_array = _this select 0;
