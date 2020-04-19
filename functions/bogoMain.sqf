@@ -53,12 +53,19 @@ while {!_isSorted} do {
 		systemChat format ["Iterations done: %1", _iterations];
 	};
 
-	if (_iterations % 10000 == 0) then {
+	if (_iterations / 50000 == 0) then {
 		systemChat "Still haven't found it...";
 	};
 
-};
+	if (_iterations / 100000 == 0) then {
+		systemChat "This may take a while...";
+	};
 
+	if (_iterations / 250000 == 0) then {
+		systemChat "Patience...";
+	};
+
+};
 
 
 //// RETURN RESULTS ////
