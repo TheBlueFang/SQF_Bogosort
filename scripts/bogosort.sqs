@@ -1,4 +1,4 @@
 #Label1
-_return = call bogosortMain;
+_return = call bogo_Main;
 
 if (!_return) then {goto "Label1"}

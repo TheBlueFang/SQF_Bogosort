@@ -1,3 +1,6 @@
+protect "BOGO_ARRAY";
+
+// Check input type
 switch (typeName _this) do {
 	case "ARRAY": {_veh = _this select 0;};
 	default { if (true) exitWith {[-1, 20] diagMessage format ["bogoMain.sqf error: Parameter Type %1, expected Array", typeName _input]} };
@@ -7,12 +10,7 @@ switch (typeName _this) do {
 	if (typeNamef _x != "SCALAR") exitWith {[-1, 20] diagMessage format ["bogoMain.sqf: Array must contain numbers only", typeName _input]}
 } forEach _input;
 
-arraySorted = [1,2,3,4,5,6,7,8];
-
-protect "arraySorted";
-
-private ["_array"];
-
+// Start timer
 if (BOGO_VM) then {
 
 	avgFrames = 0;
@@ -34,7 +32,9 @@ if (BOGO_VM) then {
 	};
 
 };
-_array = [arraySorted] call bogo_randomise;
+
+//// START SORTING ////
+_array = [BOGO_ARRAY] call bogo_randomise;
 
 systemChat "Sorting array...";
 
@@ -59,13 +59,18 @@ while {!_isSorted} do {
 
 };
 
+
+
+//// RETURN RESULTS ////
 onEachFrame {};
 
 if (avgFrames != 0) then {
 	_remainder = round(frameCounter / avgFrames * 100);
+} else {
+	_remainder = 0;
 };
 
-if ([_array] call bogo_checker) then {_return = true} else {_return = false};
+_return = [_array] call bogo_checker; //Check that the final array truly is sorted (Unscheduled environment)
 
 if (_return) then {
 	
@@ -79,14 +84,14 @@ if (_return) then {
 	systemChat "BOGOSORT HAS FAILED";
 };
 
-unprotect "arraySorted";
+unprotect "BOGO_ARRAY";
 
+// Delete variables to save memory
 if (BOGO_VM) then {
 	elapsedTime = nil;
 	avgFrames = nil;
 	frameCounter = nil;
 	totalFrames = nil;
-	arraySorted = nil;
 };
 
 _return
