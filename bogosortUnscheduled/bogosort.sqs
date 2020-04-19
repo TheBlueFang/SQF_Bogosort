@@ -1,0 +1,4 @@
+#Label1
+_return = call bogosortUnscheduled;
+
+if (!_return) then {goto "Label1"}
