@@ -89,9 +89,13 @@ if (avgFrames != 0) then {
 
 if ([_array] call bogo_checker) then {_return = true} else {_return = false};
 
+if (_return) then {
 systemChat format ["Result: %1", _array];
 systemChat format ["Elapsed time: %1.%2 seconds with %3 iterations.", elapsedTime, _remainder, _iterations];
 systemChat format ["Frames wasted: %1", totalFrames];
+} else {
+	systemChat "BOGOSORT HAS FAILED";
+};
 
 unprotect "arraySorted";
 elapsedTime = nil;
