@@ -1,5 +1,5 @@
 # SQF_Bogosort
-The highly inefficient [bogosort](https://en.wikipedia.org/wiki/Bogosort) algoritm created in SQF.
+The highly inefficient [bogosort](https://en.wikipedia.org/wiki/Bogosort) algorithm created in SQF.
 
 ## Usage
 
