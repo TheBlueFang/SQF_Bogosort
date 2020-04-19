@@ -38,6 +38,24 @@ bogo_checker = {
 	_result
 };
 
+avgFrames = 0;
+frameCounter = 0;
+elapsedTime = 0;
+totalFrames = 0;
+
+onEachFrame {
+	frameCounter = frameCounter + 1;
+	totalFrames = totalFrames + 1;
+	avgFrames = round (getFPS select 1);
+
+	if (frameCounter == avgFrames) then {
+		frameCounter = 0;
+		avgFrames = 0;
+
+		elapsedTime = elapsedTime + 1;
+	};
+};
+
 _array = [arraySorted] call bogo_randomise;
 
 systemChat "Sorting array...";
@@ -53,7 +71,14 @@ while {!_isSorted} do {
 		_iterations = _iterations + 1
 	};
 
+	if (_iterations % 1000 == 0) then {
+		systemChat format ["Iterations done: %1", _iterations];
+	};
+
 };
+
+onEachFrame {};
+
 if (avgFrames != 0) then {
 	_remainder = round(frameCounter / avgFrames * 100);
 };
@@ -61,8 +86,14 @@ if (avgFrames != 0) then {
 if ([_array] call bogo_checker) then {_return = true} else {_return = false};
 
 systemChat format ["Result: %1", _array];
+systemChat format ["Elapsed time: %1.%2 seconds with %3 iterations.", elapsedTime, _remainder, _iterations];
+systemChat format ["Frames wasted: %1", totalFrames];
 
 unprotect "arraySorted";
+elapsedTime = nil;
+avgFrames = nil;
+frameCounter = nil;
+totalFrames = nil;
 arraySorted = nil;
 
 _return
